@@ -1,59 +1,64 @@
-<div class="relative h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black animate-gradient bg-opacity-95 backdrop-filter backdrop-blur-sm shadow-lg overflow-hidden transition-all ease-in-out duration-500"
-     (mousemove)="onMouseMove($event)">
+<div class="relative h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black animate-gradient bg-opacity-95 backdrop-filter backdrop-blur-sm shadow-lg overflow-hidden ">
 
-  <div #cursor class="absolute w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 via-cyan-500 to-pink-500 opacity-45 pointer-events-none transform scale-150 blur-xl"
+  <!-- Cursor animado -->
+  <div #cursor class="absolute w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 via-cyan-500 to-pink-500 opacity-40 pointer-events-none transform scale-125 blur-2xl"
        [ngStyle]="{ top: cursorY + 'px', left: cursorX + 'px' }"></div>
 
-  <div>
-    <main class="flex flex-row mt-7">
-      <nav class="bg-white/10 border border-white/20 hidden sm:flex flex-col ml-5 w-[370px] min-h-[calc(100vh-3.0rem)] bg-white bg-opacity-10 p-5 rounded-3xl">
-        <div>
-          <img
-            src="https://avatars.githubusercontent.com/u/105228108?v=4"
-            alt=""
-            class="rounded-full h-50 w-50"
-          >
-          <h1
-            class="font-bold text-lg lg:text-xl bg-gradient-to-br from-white via-white/50 bg-clip-text text-transparent">
-            {{name}}
-          </h1>
-          <h2
-            class="font-bold text-lg lg:text-xl bg-gradient-to-br from-white via-white/50 bg-clip-text text-transparent">
-            {{role}}
-          </h2>
+  <!-- Botón para abrir el menú en móviles -->
+  <button (click)="toggleMenu()"
+          class="lg:hidden fixed top-4 left-4 bg-white/20 p-2 rounded-lg text-white z-50">
+    ☰
+  </button>
 
-          <div class="flex space-x-4 justify-center mt-3 mb-3">
-            @for (socialnetwork of socialnetworks; track $index) {
+  <!-- Fondo oscurecido cuando el menú está abierto en móviles -->
+  <div *ngIf="isMenuOpen && screenWidth <= 900" (click)="toggleMenu()"
+       class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity"></div>
 
-              <a href="{{socialnetwork.url}}">
-                <img
-                  class="inline-block size-8 rounded-full"
-                  src="{{socialnetwork.img}}"
-                  alt="{{socialnetwork.name}}">
-              </a>
-            }
-          </div>
-        </div>
-        <span class="text-xl">Bienvenido</span>
+  <!-- Menú lateral (Solo visible en móviles cuando isMenuOpen es true) -->
+  <nav [ngClass]="{
+        'translate-x-0': isMenuOpen && screenWidth <= 900,
+        '-translate-x-full': !isMenuOpen && screenWidth <= 900
+      }"
+       class="bg-white/10 border border-white/20 fixed top-0 left-0 w-64 sm:w-80 h-full bg-opacity-10 p-5 rounded-2xl transform transition-transform duration-300 z-50 shadow-2xl backdrop-blur-lg ">
 
-        <div class="border-gray-700 border my-3"></div>
+    <div class="text-center">
+      <img src="https://avatars.githubusercontent.com/u/105228108?v=4"
+           alt=""
+           class="rounded-full h-20 w-20 mx-auto">
+      <h1 class="font-bold text-lg text-white mt-2">{{name}}</h1>
+      <h2 class="text-sm text-gray-300">{{role}}</h2>
 
-        <!-- Nav Links -->
-        <app-navbar *ngFor="let route of routes"
-                     [description]="route.data!['description']"
-                     [icon]="route.data!['icon']"
-                     [title]="route.data!['title']"
-                     [path]="route.path!"></app-navbar>
-      </nav>
+      <!-- Redes Sociales -->
+      <div class="flex space-x-3 justify-center mt-3">
+        @for (socialnetwork of socialnetworks; track $index) {
+          <a href="{{socialnetwork.url}}">
+            <img class="w-8 h-8 rounded-full" src="{{socialnetwork.img}}" alt="{{socialnetwork.name}}">
+          </a>
+        }
+      </div>
+    </div>
 
-      <!-- Scroll Section Here -->
-      <section class="bg-white/10 border border-white/20 mx-3 sm:mx-10 flex flex-col w-full h-[calc(100vh-50px)] bg-white bg-opacity-10 p-5 rounded-3xl overflow-y-auto">
-        <div class="flex h-full flex-row">
-          <div class="flex flex-col flex-auto p-1">
-            <router-outlet />
-          </div>
-        </div>
-      </section>
-    </main>
+
+    <!-- Nav Links -->
+    <app-navbar *ngFor="let route of routes"
+                 [description]="route.data!['description']"
+                 [icon]="route.data!['icon']"
+                 [title]="route.data!['title']"
+                 [path]="route.path!"></app-navbar>
+  </nav>
+
+  <!-- Contenido Principal -->
+  <div [ngClass]="{
+        'sm:left-80 sm:w-[calc(100%-20rem)]': screenWidth > 900,
+        'left-0 w-full': screenWidth <= 900 && !isMenuOpen,
+        'left-64 w-[calc(100%-16rem)]': screenWidth <= 900 && isMenuOpen
+      }"
+       class="absolute top-0 left-0 h-full flex flex-col bg-white/10 border border-white/20  sm:mx-10 rounded-3xl p-1 overflow-auto z-10 transition-all duration-300 ">
+
+    <div class="flex h-full w-full overflow-auto flex-col items-center ">
+      <router-outlet></router-outlet>
+    </div>
+
   </div>
+
 </div>

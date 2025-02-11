@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component,HostListener, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
 import { routes } from '../../app.routes';
@@ -21,7 +21,11 @@ interface socialNetwork {
   styleUrl: './dashboardLayout.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardLayoutComponent {
+export class DashboardLayoutComponent implements OnInit{
+  screenWidth: number = window.innerWidth;
+  ngOnInit(): void {
+    this.onResize(); // Establece el tamaño inicial de la pantalla
+  }
   name:string = '<Elvis D. Quinteros S./>';
   role:string = 'Fullstack Developer';
   socialnetworks:socialNetwork[] = [
@@ -47,10 +51,18 @@ export class DashboardLayoutComponent {
 
   cursorX = 0;
   cursorY = 0;
-
+  isMenuOpen = false;
   onMouseMove(event: MouseEvent) {
     this.cursorX = event.clientX - 32; // Ajuste para centrar
     this.cursorY = event.clientY - 32; // Ajuste para centrar
+  }
+  // Escucha cambios en el tamaño de la ventana
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+  }
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
 
