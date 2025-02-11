@@ -1,0 +1,61 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: portfolio
+metadata:
+    template: azd-init@1.11.0
+services:
+    portfolio:
+        project: .
+        host: containerapp
+        language: ts
+        dist: dist/.
+        docker:
+            path: Dockerfile
+
+
+/////////////////////////////////////
+[
+	{
+		"userId": 1,
+		"fullname": "John Doe",
+		"username": "johndoe",
+		"roles": [
+			{
+				"iD_Rol": 1,
+				"nombre_Rol": "Administrador",
+				"permisos": [
+					{
+						"iD_Permiso": 1,
+						"nombre_Permiso": "Crear"
+					},
+                    {
+						"iD_Permiso": 2,
+						"nombre_Permiso": "Leer"
+					},
+                    {
+                        "iD_Permiso": 3,
+                        "nombre_Permiso": "Actualizar"
+                    },
+                    {
+                        "iD_Permiso": 4,
+                        "nombre_Permiso": "Eliminar"
+                    }
+				]
+			},
+            {
+                "iD_Rol": 2,
+                "nombre_Rol": "Usuario",
+                "permisos": [
+                    {
+                        "iD_Permiso": 2,
+                        "nombre_Permiso": "Leer"
+                    },
+                    {
+                        "iD_Permiso": 3,
+                        "nombre_Permiso": "Actualizar"
+                    }
+                ]
+            }
+		]
+	}
+]

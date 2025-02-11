@@ -1,0 +1,59 @@
+<div class="relative h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black animate-gradient bg-opacity-95 backdrop-filter backdrop-blur-sm shadow-lg overflow-hidden transition-all ease-in-out duration-500"
+     (mousemove)="onMouseMove($event)">
+
+  <div #cursor class="absolute w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 via-cyan-500 to-pink-500 opacity-45 pointer-events-none transform scale-150 blur-xl"
+       [ngStyle]="{ top: cursorY + 'px', left: cursorX + 'px' }"></div>
+
+  <div>
+    <main class="flex flex-row mt-7">
+      <nav class="bg-white/10 border border-white/20 hidden sm:flex flex-col ml-5 w-[370px] min-h-[calc(100vh-3.0rem)] bg-white bg-opacity-10 p-5 rounded-3xl">
+        <div>
+          <img
+            src="https://avatars.githubusercontent.com/u/105228108?v=4"
+            alt=""
+            class="rounded-full h-50 w-50"
+          >
+          <h1
+            class="font-bold text-lg lg:text-xl bg-gradient-to-br from-white via-white/50 bg-clip-text text-transparent">
+            {{name}}
+          </h1>
+          <h2
+            class="font-bold text-lg lg:text-xl bg-gradient-to-br from-white via-white/50 bg-clip-text text-transparent">
+            {{role}}
+          </h2>
+
+          <div class="flex space-x-4 justify-center mt-3 mb-3">
+            @for (socialnetwork of socialnetworks; track $index) {
+
+              <a href="{{socialnetwork.url}}">
+                <img
+                  class="inline-block size-8 rounded-full"
+                  src="{{socialnetwork.img}}"
+                  alt="{{socialnetwork.name}}">
+              </a>
+            }
+          </div>
+        </div>
+        <span class="text-xl">Bienvenido</span>
+
+        <div class="border-gray-700 border my-3"></div>
+
+        <!-- Nav Links -->
+        <app-navbar *ngFor="let route of routes"
+                     [description]="route.data!['description']"
+                     [icon]="route.data!['icon']"
+                     [title]="route.data!['title']"
+                     [path]="route.path!"></app-navbar>
+      </nav>
+
+      <!-- Scroll Section Here -->
+      <section class="bg-white/10 border border-white/20 mx-3 sm:mx-10 flex flex-col w-full h-[calc(100vh-50px)] bg-white bg-opacity-10 p-5 rounded-3xl overflow-y-auto">
+        <div class="flex h-full flex-row">
+          <div class="flex flex-col flex-auto p-1">
+            <router-outlet />
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>

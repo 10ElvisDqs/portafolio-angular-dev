@@ -1,0 +1,24 @@
+.project-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.tech-tags span {
+  transition: transform 0.2s ease-in-out;
+}
+
+.tech-tags span:hover {
+  transform: scale(1.1);
+}
+
+.container {
+  max-width: 1200px;
+}
+
+.grid {
+  gap: 1.5rem;
+}

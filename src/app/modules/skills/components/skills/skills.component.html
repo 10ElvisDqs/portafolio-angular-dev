@@ -1,0 +1,45 @@
+<div class="min-h-screen text-white flex flex-col items-center justify-center">
+  <h1 class="text-4xl font-bold mb-4">Skills</h1>
+  <p class="text-gray-400 mb-6">Explora mis Habilidades en diferentes Áreas</p>
+
+  <!-- Botones de categorías -->
+  <div class="flex space-x-4 mb-8">
+    <button
+      class="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-white transition-all duration-300"
+      (click)="filterByType('front-end')"
+    >
+      Front-End
+    </button>
+    <button
+      class="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-white transition-all duration-300"
+      (click)="filterByType('back-end')"
+    >
+      Backend
+    </button>
+    <button
+      class="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-white transition-all duration-300"
+      (click)="filterByType('devops')"
+    >
+      DevOps
+    </button>
+    <button
+      class="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-white transition-all duration-300"
+      (click)="filterByType('IA')"
+    >
+      IA
+    </button>
+  </div>
+
+  <!-- Iconos de habilidades -->
+  <div class="flex space-x-4">
+    @for (technology of filteredTechnologies; track $index) {
+      <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
+        <img
+          [src]="technology.icon"
+          [alt]="technology.name"
+          class="h-12 w-12 mx-auto"
+        />
+      </div>
+    }
+  </div>
+</div>
